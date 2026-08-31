@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Noto+Sans+Tamil:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #14243d;
+  --color-ink-light: #1e3a5f;
+  --color-steel: #4a6178;
+  --color-steel-light: #8296a8;
+  --color-brass: #b8862e;
+  --color-brass-light: #d9ab5a;
+  --color-surface: #f5f6f8;
+  --color-surface-raised: #ffffff;
+  --color-hairline: #dde3e9;
+  --color-pass: #1f7a4d;
+  --color-pass-bg: #e7f5ee;
+  --color-fail: #b0332b;
+  --color-fail-bg: #fbe9e7;
+  --color-warn: #b8862e;
+  --color-warn-bg: #fbf1de;
+
+  --font-display: "Space Grotesk", "Noto Sans Devanagari", "Noto Sans Tamil", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter", "Noto Sans Devanagari", "Noto Sans Tamil", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", "Noto Sans Devanagari", "Noto Sans Tamil", ui-monospace, monospace;
+}
+
+html {
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  background: var(--color-surface);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-hairline) transparent;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-brass);
+  outline-offset: 2px;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Verification-scale tick motif — reused as the app's signature element */
+.tick-ruler {
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--color-hairline) 0,
+    var(--color-hairline) 1px,
+    transparent 1px,
+    transparent 10px
+  );
+  background-position: bottom;
+  background-size: 100% 100%;
+}
