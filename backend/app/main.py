@@ -29,6 +29,21 @@ app.add_middleware(
 def on_startup():
     Base.metadata.create_all(bind=engine)
 
+    # Auto-seed demo data if the database is empty. This exists specifically
+    # because Render's free tier has no Shell/SSH access to run `python -m
+    # app.seed` manually — so the app seeds itself once, safely, since
+    # seed.run() only creates records that don't already exist (get_or_create).
+    from app.core.database import SessionLocal
+    from app.models.user import User
+
+    db = SessionLocal()
+    try:
+        if db.query(User).count() == 0:
+            from app.seed import run as seed_run
+            seed_run()
+    finally:
+        db.close()
+
 
 app.include_router(auth_router.router)
 app.include_router(instruments_router.router)
