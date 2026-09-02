@@ -1,3 +1,5 @@
+
+Sw · JS
 // WeighSure AI service worker
 // Scope: offline access to the app shell (so the UI still loads with no
 // network) and cached read access to GET /api/* responses (so dashboard,
@@ -7,17 +9,17 @@
 // A POST/PUT made offline fails immediately and the UI should surface that —
 // building a reliable offline write queue with conflict resolution is a
 // separate, much larger feature.
-
+ 
 const CACHE_NAME = "weighsure-cache-v1";
 const APP_SHELL = ["/", "/manifest.json", "/icon-192.png", "/icon-512.png"];
-
+ 
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL))
   );
   self.skipWaiting();
 });
-
+ 
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
@@ -26,29 +28,39 @@ self.addEventListener("activate", (event) => {
   );
   self.clients.claim();
 });
-
+ 
 self.addEventListener("fetch", (event) => {
   const { request } = event;
   const url = new URL(request.url);
-
+ 
   // Never intercept non-GET requests — mutations always go straight to the
   // network; if the network is down, they fail visibly rather than silently
   // queuing (see note above).
   if (request.method !== "GET") return;
-
+ 
   // Only handle same-origin requests.
   if (url.origin !== self.location.origin) return;
-
+ 
   // SPA navigations: try network, fall back to the cached app shell so the
   // React app itself still boots offline (it'll show cached data for
   // whatever screen loads, per the API caching below).
   if (request.mode === "navigate") {
     event.respondWith(
-      fetch(request).catch(() => caches.match("/"))
+      fetch(request).catch(async () => {
+        const cached = await caches.match("/");
+        // caches.match can resolve to undefined (nothing cached yet — e.g.
+        // first-ever visit, or a direct navigation before install finished).
+        // respondWith() requires an actual Response, so fall back to a
+        // plain error response instead of passing undefined through.
+        return cached || new Response(
+          "You're offline and this page hasn't been cached yet.",
+          { status: 503, headers: { "Content-Type": "text/plain" } }
+        );
+      })
     );
     return;
   }
-
+ 
   // GET /api/*: network-first, cache the successful response, fall back to
   // the last cached copy when offline. This is what makes Dashboard,
   // Instruments, Tests, Reports viewable with no connection.
@@ -66,7 +78,7 @@ self.addEventListener("fetch", (event) => {
     );
     return;
   }
-
+ 
   // Static assets (hashed JS/CSS/icons): stale-while-revalidate — serve
   // from cache immediately if present, and refresh the cache in the
   // background for next time.
@@ -85,3 +97,4 @@ self.addEventListener("fetch", (event) => {
     })
   );
 });
+ 
