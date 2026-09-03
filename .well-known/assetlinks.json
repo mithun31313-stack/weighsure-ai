@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.onrender.weighsure_frontend.twa",
+        "sha256_cert_fingerprints": ["95:DF:02:E7:EA:78:68:C9:84:75:61:18:26:3E:6D:ED:AD:85:BC:EA:21:54:E8:A5:23:92:80:2F:D4:D6:D7:F6"]
+      }
+    }]
