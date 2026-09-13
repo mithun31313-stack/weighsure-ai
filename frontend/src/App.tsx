@@ -15,8 +15,6 @@ import { AuditTrail } from "./pages/AuditTrail";
 import { Settings } from "./pages/Settings";
 import { Verify } from "./pages/Verify";
 import { Billing } from "./pages/Billing";
-// ...
-<Route path="/billing" element={<Protected><Billing /></Protected>} />
 
 function Protected({ children }: { children: ReactNode }) {
   const { user, loading } = useAuth();
@@ -40,6 +38,7 @@ function AppRoutes() {
       <Route path="/analytics" element={<Protected><Analytics /></Protected>} />
       <Route path="/audit" element={<Protected><AuditTrail /></Protected>} />
       <Route path="/settings" element={<Protected><Settings /></Protected>} />
+      <Route path="/billing" element={<Protected><Billing /></Protected>} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
