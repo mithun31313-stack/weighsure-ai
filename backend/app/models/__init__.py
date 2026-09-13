@@ -15,4 +15,5 @@ __all__ = [
     "Test", "Observation", "TestResult", "TestStatus",
     "Attachment", "Report", "Signature", "VerificationRecord", "AuditLog",
     "AppSetting", "Notification",
+    "Subscription",
 ]
