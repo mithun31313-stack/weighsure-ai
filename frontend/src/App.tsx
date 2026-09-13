@@ -14,6 +14,9 @@ import { Analytics } from "./pages/Analytics";
 import { AuditTrail } from "./pages/AuditTrail";
 import { Settings } from "./pages/Settings";
 import { Verify } from "./pages/Verify";
+import { Billing } from "./pages/Billing";
+// ...
+<Route path="/billing" element={<Protected><Billing /></Protected>} />
 
 function Protected({ children }: { children: ReactNode }) {
   const { user, loading } = useAuth();
