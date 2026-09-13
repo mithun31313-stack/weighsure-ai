@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
 from app.core.database import Base, engine
 from app import models  # noqa: F401 — registers all models on Base
 from app.routers import auth as auth_router
