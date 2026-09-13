@@ -1,3 +1,4 @@
+from app.models.subscription import Subscription
 from app.models.user import User, Laboratory, RoleEnum
 from app.models.instrument import Instrument, InstrumentHistory
 from app.models.rules import (
