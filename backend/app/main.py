@@ -13,6 +13,7 @@ from app.routers import standards as standards_router
 from app.routers import settings as settings_router
 from app.routers import notifications as notifications_router
 from app.routers import audit as audit_router
+from app.routers import billing as billing_router
 
 app = FastAPI(title="WeighSure AI", version="0.1.0")
 
@@ -55,6 +56,7 @@ app.include_router(standards_router.router)
 app.include_router(settings_router.router)
 app.include_router(notifications_router.router)
 app.include_router(audit_router.router)
+app.include_router(billing_router.router)
 
 
 @app.get("/api/health")
